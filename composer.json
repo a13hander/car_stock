@@ -1,0 +1,26 @@
+{
+    "name": "tapir/stock",
+    "authors": [
+        {
+            "name": "Александр Ратуев",
+            "email": "a.ratuev@tapir.ws"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.2",
+        "ext-simplexml": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stock\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\Stock\\StockProvider"
+            ]
+        }
+    }
+}
