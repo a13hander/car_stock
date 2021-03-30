@@ -32,7 +32,7 @@ class StockProvider extends ServiceProvider
         ], 'migrations');
 
         $this->publishes([
-            __DIR__ . '/Models/' => app_path('Models/CarStock')
+            __DIR__ . '/../stubs/Models/' => app_path('Models/CarStock')
         ], 'models');
     }
 

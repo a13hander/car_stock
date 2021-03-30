@@ -1,6 +1,6 @@
 <?php
 
-namespace Stock\Models;
+namespace App\Models\CarStock;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
