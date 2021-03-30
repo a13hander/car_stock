@@ -2,7 +2,7 @@
 
 namespace Stock\Import;
 
-use Stock\Models\Location;
+use App\Models\CarStock\Location;
 use Exception;
 use Illuminate\Support\Collection;
 use function sluggify;

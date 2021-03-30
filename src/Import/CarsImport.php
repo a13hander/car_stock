@@ -6,8 +6,8 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Stock\Dto\Car as CarDto;
-use Stock\Models\Car;
-use Stock\Models\CarModel;
+use App\Models\CarStock\Car;
+use App\Models\CarStock\CarModel;
 
 class CarsImport
 {

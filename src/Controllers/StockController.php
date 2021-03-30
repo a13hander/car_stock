@@ -5,7 +5,7 @@ namespace Stock\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Stock\Filters\StockCarFilter;
-use Stock\Models\Brand;
+use App\Models\CarStock\Brand;
 use Stock\Requests\CarRequest;
 use Stock\Resources\BrandModelResource;
 use Stock\Resources\BrandResource;

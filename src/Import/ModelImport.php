@@ -2,8 +2,8 @@
 
 namespace Stock\Import;
 
-use Stock\Models\Brand;
-use Stock\Models\CarModel;
+use App\Models\CarStock\Brand;
+use App\Models\CarStock\CarModel;
 use Illuminate\Support\Collection;
 use function sluggify;
 

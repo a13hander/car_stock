@@ -3,7 +3,7 @@
 namespace Stock\Import;
 
 use Illuminate\Support\Collection;
-use Stock\Models\Brand;
+use App\Models\CarStock\Brand;
 use function sluggify;
 
 class BrandImport

@@ -3,7 +3,7 @@
 namespace Stock\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Stock\Models\CarModel;
+use App\Models\CarStock\CarModel;
 
 class SingleModelResource extends JsonResource
 {

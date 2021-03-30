@@ -3,7 +3,7 @@
 namespace Stock\Filters;
 
 use Stock\Enums\StockEnum;
-use Stock\Models\CarModel;
+use App\Models\CarStock\CarModel;
 use Illuminate\Database\Eloquent\Builder;
 
 class StockCarFilter extends CarFilter

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Stock\Models\Car;
+use App\Models\CarStock\Car;
 use function array_filter;
 use function array_unique;
 use function compact;
