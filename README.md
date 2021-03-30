@@ -2,7 +2,7 @@
 
 ## Установка
 Выполнить в консоли следующие команды:
-1) `composer require tapir/stock`
+1) `composer require a13hander/car_stock`
 2) `php artisan vendor:publish --provider="Stock\StockProvider"`
 3) `php artisan migrate`
 
