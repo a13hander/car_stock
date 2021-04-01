@@ -25,7 +25,7 @@ class CreateStockCarsTable extends Migration
             $table->string('engine_power');
             $table->string('engine_volume');
 
-            $table->integer('doors');
+            $table->integer('doors')->nullable();
             $table->year('year')->nullable();
             $table->unsignedInteger('kilometrage')->default(0);
             $table->string('color')->nullable();

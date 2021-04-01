@@ -1,10 +1,13 @@
 <?php
 
-namespace Stock;
+namespace Stock\Fetchers\Feed;
 
 use GuzzleHttp\Client as HttpClient;
+use Stock\Fetchers\Fetcher;
+use Stock\Fetchers\FetchResult;
+use Stock\Parsers\Feed\XmlParser;
 
-class Fetcher
+class FeedFetcher implements Fetcher
 {
     private HttpClient $httpClient;
     private XmlParser $xmlParser;

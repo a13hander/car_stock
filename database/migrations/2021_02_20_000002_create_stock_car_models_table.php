@@ -14,7 +14,7 @@ class CreateStockCarModelsTable extends Migration
             $table->string('slug');
             $table->unsignedBigInteger('brand_id');
 
-            $table->unique('name', 'brand_id');
+            $table->unique(['slug', 'brand_id']);
             $table->foreign('brand_id')->on('stock_brands')->references('id')->cascadeOnDelete();
         });
     }

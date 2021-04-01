@@ -2,7 +2,13 @@
 
 namespace Stock;
 
-use Stock\Commands\ImportCommand;
+use Stock\Commands\ImportAllCommand;
+use Stock\Fetchers\Feed\FeedFetcher;
+use Stock\Fetchers\Fetcher;
+use Stock\Fetchers\Feed\FetcherConfig;
+use Stock\Fetchers\GoogleDoc\GoogleDocFetcher;
+use Stock\Parsers\Feed\XmlParser;
+use Stock\Parsers\GoogleDoc\GoogleDocParser;
 use Stock\Validation\DefaultValidator;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +22,7 @@ class StockProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         $this->commands([
-            ImportCommand::class,
+            ImportAllCommand::class,
         ]);
 
         $this->mergeConfigFrom(
@@ -42,27 +48,41 @@ class StockProvider extends ServiceProvider
             return new DefaultValidator();
         });
 
-        $this->app->bind(Parser::class, function (Application $app) {
-            return new XmlParser(
-                $app->make(Validator::class),
-                config('stock.fields_map')
-            );
-        });
-
-        $this->app->bind(Fetcher::class, function (Application $app) {
+        //импорт feed
+        $this->app->when(FeedImporter::class)->needs(Fetcher::class)->give(function (Application $app) {
             $httpClient = $app->make(HttpClient::class);
-            $parser = $app->make(Parser::class);
+            $parser = $app->make(XmlParser::class);
 
-            $filename = storage_path('app/' . config('stock.filename'));
-            $previousFilename = storage_path('app/' . 'previous_' . config('stock.filename'));
+            $filename = storage_path('app/' . config('stock.feed.filename'));
+            $previousFilename = storage_path('app/' . 'previous_' . config('stock.feed.filename'));
 
             $config = new FetcherConfig(
-                config('stock.source_url'),
+                config('stock.feed.source_url'),
                 $filename,
                 $previousFilename,
             );
 
-            return new Fetcher($httpClient, $parser, $config);
+            return new FeedFetcher($httpClient, $parser, $config);
+        });
+        $this->app->bind(XmlParser::class, function (Application $app) {
+            return new XmlParser(
+                $app->make(Validator::class),
+                config('stock.feed.fields_map')
+            );
+        });
+
+        //импорт google doc
+        $this->app->bind(GoogleDocParser::class, function (Application $app) {
+            return new GoogleDocParser(
+                $app->make(Validator::class),
+                config('stock.google-doc.fields_map')
+            );
+        });
+        $this->app->when(GoogleDocImporter::class)->needs(Fetcher::class)->give(function (Application $app) {
+            return new GoogleDocFetcher(
+                $this->app->make(GoogleDocParser::class),
+                config('stock.google-doc')
+            );
         });
     }
 }

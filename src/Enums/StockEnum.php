@@ -6,6 +6,10 @@ class StockEnum
 {
     public const TYPE_NEW = 'new';
     public const TYPE_USED = 'used';
+    public const TYPE_MAPPING = [
+        self::TYPE_NEW => 'Новые авто',
+        self::TYPE_USED => 'Авто с пробегом',
+    ];
 
     public const BODY_TYPE_HATCHBACK = 'hatchback';
     public const BODY_TYPE_UNIVERSAL = 'universal';

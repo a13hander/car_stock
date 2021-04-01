@@ -5,7 +5,7 @@ namespace Stock\Import;
 use App\Models\CarStock\Location;
 use Exception;
 use Illuminate\Support\Collection;
-use function sluggify;
+use Illuminate\Support\Str;
 
 class LocationImport
 {
@@ -28,7 +28,7 @@ class LocationImport
         foreach ($newItems as $address) {
             $this->builder->newQuery()->create([
                 'address' => $address,
-                'slug' => sluggify($address),
+                'slug' => Str::slug($address),
             ]);
         }
 

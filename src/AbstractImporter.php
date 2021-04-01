@@ -2,47 +2,30 @@
 
 namespace Stock;
 
+use Illuminate\Support\Collection;
+use Psr\Log\LoggerInterface;
+use Stock\Fetchers\Fetcher;
 use Stock\Import\BrandImport;
 use Stock\Import\CarsImport;
 use Stock\Import\LocationImport;
 use Stock\Import\ModelImport;
-use Illuminate\Support\Collection;
-use Psr\Log\LoggerInterface;
 
-class Importer
+abstract class AbstractImporter
 {
     public function __construct(
-        private Fetcher $fetcher,
-        private LocationImport $locationImport,
-        private BrandImport $brandImport,
-        private ModelImport $modelImport,
-        private CarsImport $carsImport,
-        private LoggerInterface $logger
+        protected Fetcher $fetcher,
+        protected LocationImport $locationImport,
+        protected BrandImport $brandImport,
+        protected ModelImport $modelImport,
+        protected CarsImport $carsImport,
+        protected LoggerInterface $logger
     )
     {
     }
 
-    public function import(bool $force = false): void
-    {
-        if (!$this->fetcher->hasDifferences() && !$force) {
-            $this->logger->info('Импорт не содержит новых данных, для принудительного запуска добавьте ключ --force');
-            return;
-        }
+    abstract public function import(bool $force = false): void;
 
-        $result = $this->fetcher->fetch();
-        $cars = collect($result->getCars());
-
-        $this->importLocations($cars);
-        $this->importBrands($cars);
-        $this->importModels($cars);
-        $this->importCars($cars);
-
-        //if ($result->hasIncompleteCars()) {
-        //    // отправка отчета
-        //}
-    }
-
-    private function importLocations(Collection $cars): void
+    protected function importLocations(Collection $cars): void
     {
         $this->locationImport->handle($cars);
         $newItems = $this->locationImport->getLastImportedItems();
@@ -54,7 +37,7 @@ class Importer
         }
     }
 
-    private function importBrands(Collection $cars): void
+    protected function importBrands(Collection $cars): void
     {
         $this->brandImport->handle($cars);
         $newItems = $this->brandImport->getLastImportedItems();
@@ -66,7 +49,7 @@ class Importer
         }
     }
 
-    private function importModels(Collection $cars): void
+    protected function importModels(Collection $cars): void
     {
         $this->modelImport->handle($cars);
         $newItems = $this->modelImport->getLastImportedItems();
@@ -86,7 +69,7 @@ class Importer
         }
     }
 
-    private function importCars(Collection $cars): void
+    protected function importCars(Collection $cars): void
     {
         $this->carsImport->handle($cars);
         $newItems = $this->carsImport->getLastImportedItems();

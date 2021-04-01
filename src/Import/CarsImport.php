@@ -5,6 +5,7 @@ namespace Stock\Import;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Stock\Dto\Car as CarDto;
 use App\Models\CarStock\Car;
 use App\Models\CarStock\CarModel;
@@ -97,7 +98,7 @@ class CarsImport
         $car->fill($attrs);
         $car->save();
 
-        if ($carDto->images !== $car->images->toArray()) {
+        if ($carDto->images !== $car->images->toArray() && count($car->images) > 0) {
             $car->images()->delete();
 
             foreach ($carDto->images as $image) {
@@ -110,8 +111,8 @@ class CarsImport
     {
         return $this->carModel
             ->newQuery()
-            ->whereHas('brand', fn(Builder $builder) => $builder->where('name', $brand))
-            ->where('name', $model)
+            ->whereHas('brand', fn(Builder $builder) => $builder->where('slug', Str::slug($brand)))
+            ->where('name', Str::slug($model))
             ->first();
     }
 
