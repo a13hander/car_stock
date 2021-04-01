@@ -1,6 +1,6 @@
 <?php
 
-namespace Stock;
+namespace Stock\Fetchers;
 
 use Stock\Dto\Car;
 use Stock\Dto\IncompleteCar;

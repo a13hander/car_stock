@@ -3,6 +3,7 @@
 namespace Stock\Validation;
 
 use Stock\Dto\Car;
+use Stock\Enums\StockEnum;
 
 class DefaultValidator implements Validator
 {
@@ -37,7 +38,7 @@ class DefaultValidator implements Validator
 
     protected function images(Car $car): ?ValidationError
     {
-        if (empty($car->images)) {
+        if ($car->type == StockEnum::TYPE_USED && empty($car->images)) {
             return new ValidationError('images', 'Нет изображений');
         }
 

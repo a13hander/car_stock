@@ -2,6 +2,9 @@
 
 namespace Stock\Dto;
 
+use Illuminate\Support\Str;
+use Stock\Enums\StockEnum;
+
 class Car
 {
     public string $id;
@@ -30,22 +33,22 @@ class Car
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id ?? Str::uuid(),
             'type' => $this->type,
             'vin' => $this->vin,
             'body_type' => $this->body_type,
             'fuel_type' => $this->fuel_type,
             'drive_type' => $this->drive_type,
             'gearbox_type' => $this->gearbox_type,
-            'wheel_type' => $this->wheel_type,
+            'wheel_type' => $this->wheel_type ?? StockEnum::WHEEL_TYPE_MAPPING[StockEnum::WHEEL_TYPE_LEFT],
             'engine_power' => $this->engine_power,
             'engine_volume' => $this->engine_volume,
-            'doors' => $this->doors,
-            'kilometrage' => $this->kilometrage,
+            'doors' => $this->doors ?? null,
+            'kilometrage' => $this->kilometrage ?? 0,
             'color' => $this->color,
-            'accident' => $this->accident,
-            'owners' => $this->owners,
-            'description' => $this->description,
+            'accident' => $this->accident ?? null,
+            'owners' => $this->owners ?? 0,
+            'description' => $this->description ?? null,
             'price' => $this->price,
         ];
     }

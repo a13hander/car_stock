@@ -1,25 +1,18 @@
 <?php
 
-namespace Stock;
+namespace Stock\Parsers\Feed;
 
 use Exception;
 use SimpleXMLElement;
 use Stock\Dto\Car;
 use Stock\Dto\IncompleteCar;
-use Stock\Validation\Validator;
+use Stock\Enums\StockEnum;
+use Stock\Fetchers\FetchResult;
+use Stock\Parsers\Parser;
 
-class XmlParser implements Parser
+class XmlParser extends Parser
 {
-    private Validator $validator;
-    private array $fieldsMap;
-
-    public function __construct(Validator $validator, array $fieldsMap)
-    {
-        $this->validator = $validator;
-        $this->fieldsMap = $fieldsMap;
-    }
-
-    public function parse(string $filename): FetchResult
+    public function parse($filename): FetchResult
     {
         $xml = simplexml_load_file($filename);
         $result = new FetchResult();
@@ -42,7 +35,7 @@ class XmlParser implements Parser
     protected function parseCar(SimpleXMLElement $ad): Car
     {
         $car = new Car();
-        $car->type = 'used';
+        $car->type = StockEnum::TYPE_USED;
 
         $car->id = $this->id($ad);
         $car->vin = $this->vin($ad);

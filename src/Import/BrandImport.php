@@ -4,7 +4,7 @@ namespace Stock\Import;
 
 use Illuminate\Support\Collection;
 use App\Models\CarStock\Brand;
-use function sluggify;
+use Illuminate\Support\Str;
 
 class BrandImport
 {
@@ -19,15 +19,15 @@ class BrandImport
 
     public function handle(Collection $cars): void
     {
-        $exists = $this->builder->newQuery()->pluck('name')->toArray();
+        $exists = $this->builder->newQuery()->pluck('slug')->toArray();
         $newBrands = $cars->pluck('brand')
             ->unique()
-            ->filter(fn(string $brand) => in_array($brand, $exists) === false);
+            ->filter(fn(string $brand) => in_array(Str::slug($brand), $exists) === false);
 
         foreach ($newBrands as $brand) {
             $this->builder->newQuery()->create([
                 'name' => $brand,
-                'slug' => sluggify($brand),
+                'slug' => Str::slug($brand),
             ]);
         }
 

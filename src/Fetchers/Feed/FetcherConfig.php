@@ -1,6 +1,6 @@
 <?php
 
-namespace Stock;
+namespace Stock\Fetchers\Feed;
 
 class FetcherConfig
 {
