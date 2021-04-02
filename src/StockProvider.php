@@ -2,7 +2,7 @@
 
 namespace Stock;
 
-use Stock\Commands\ImportAllCommand;
+use Stock\Commands\ImportCommand;
 use Stock\Fetchers\Feed\FeedFetcher;
 use Stock\Fetchers\Fetcher;
 use Stock\Fetchers\Feed\FetcherConfig;
@@ -22,7 +22,7 @@ class StockProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
 
         $this->commands([
-            ImportAllCommand::class,
+            ImportCommand::class,
         ]);
 
         $this->mergeConfigFrom(
