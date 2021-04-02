@@ -8,6 +8,8 @@ use Stock\Enums\StockEnum;
 class Car
 {
     public string $id;
+    public ?string $equipment;
+    public ?string $modification;
     public string $type;
     public string $vin;
     public string $brand;
@@ -50,6 +52,9 @@ class Car
             'owners' => $this->owners ?? 0,
             'description' => $this->description ?? null,
             'price' => $this->price,
+            'year' => $this->year ?? null,
+            'equipment' => $this->equipment ?? null,
+            'modification' => $this->modification ?? null,
         ];
     }
 }
