@@ -42,6 +42,10 @@ class CarsImport
                 continue;
             }
 
+            if ($car->trashed()) {
+                $car->restore();
+            }
+
             try {
                 $this->updateCar($car, $carDto);
             } catch (Exception) {
@@ -118,6 +122,6 @@ class CarsImport
 
     protected function newQuery(): Builder
     {
-        return $this->builder->newQuery();
+        return $this->builder->newQuery()->withTrashed();
     }
 }
