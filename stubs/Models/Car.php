@@ -2,11 +2,13 @@
 
 namespace App\Models\CarStock;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Stock\Enums\StockEnum;
 
 /**
  * @property string $id
@@ -50,6 +52,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Location $location
  *
  * @property Collection $images
+ *
+ * @method Builder new()
+ * @method Builder used()
  */
 class Car extends Model
 {
@@ -58,7 +63,6 @@ class Car extends Model
     protected $table = 'stock_cars';
     protected $keyType = 'string';
     public $incrementing = false;
-    public $timestamps = false;
 
     protected $guarded = [];
 
@@ -114,6 +118,16 @@ class Car extends Model
 
     public function getPriceFormatted(): string
     {
-        return format_number($this->price);
+        return number_format($this->price, 0, 0, ' ');
+    }
+
+    public function scopeNew(Builder $builder): Builder
+    {
+        return $builder->where('type', StockEnum::TYPE_NEW);
+    }
+
+    public function scopeUsed(Builder $builder): Builder
+    {
+        return $builder->where('type', StockEnum::TYPE_USED);
     }
 }

@@ -86,7 +86,6 @@ abstract class CarFilter
         /** @var Builder $query */
         $query = $this->cars->newQuery()
             ->with('images')
-            ->has('images')
             ->orderBy('deleted_at');
 
         $formFields = array_filter(Arr::except($request->validated(), static::EXCLUDES_FIELDS), function ($value) {

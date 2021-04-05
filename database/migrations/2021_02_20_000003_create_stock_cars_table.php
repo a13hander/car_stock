@@ -46,6 +46,7 @@ class CreateStockCarsTable extends Migration
             $table->unsignedBigInteger('location_id')->nullable();
 
             $table->softDeletes();
+            $table->timestamps();
 
             $table->foreign('location_id')->on('stock_locations')->references('id')->cascadeOnDelete();
             $table->foreignId('model_id')->constrained('stock_car_models')->cascadeOnDelete();

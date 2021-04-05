@@ -16,20 +16,19 @@ class CarResource extends JsonResource
             'id' => $self->id,
             'brand' => $self->car_model->brand->name,
             'model' => $self->car_model->name,
-            'price' => $self->price_formatted,
-            'benefit' => $self->benefit,
+            'price' => $self->getPriceFormatted(),
             'year' => $self->year,
             'kilometrage' => $self->kilometrage,
-            'transmission' => $self->transmission,
+            'transmission' => $self->gearbox_type,
             'body_type' => $self->body_type,
             'fuel_type' => $self->fuel_type,
-            'engine_size' => $self->engine_size,
-            'power' => $self->power,
+            'engine_size' => $self->engine_volume,
+            'power' => $self->engine_power,
             'url' => $self->getUrl(),
-            'main_image' => $self->main_image->preview,
+            'main_image' => $self->getMainImage()?->image,
             'color' => $self->color,
             'sold' => $self->trashed(),
-            'points' => $self->getPoints()->pluck('text')->toArray()
+            'type' => $self->type
         ];
     }
 }

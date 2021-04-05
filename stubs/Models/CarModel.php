@@ -2,8 +2,10 @@
 
 namespace App\Models\CarStock;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -12,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $brand_id
  * @property string $full_name
  * @property Brand $brand
+ * @property Car[]|Collection $cars
  */
 class CarModel extends Model
 {
@@ -23,5 +26,10 @@ class CarModel extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
+
+    public function cars(): HasMany
+    {
+        return $this->hasMany(Car::class, 'model_id', 'id');
     }
 }

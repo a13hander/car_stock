@@ -17,7 +17,7 @@ class StockController
     {
         return BrandResource::collection(
             $brands->newQuery()
-                ->has('models.cars')
+                ->has('car_models.cars')
                 ->orderBy('name')
                 ->get()
         );
@@ -29,8 +29,8 @@ class StockController
 
         $brandModels = $brand
             ->newQuery()
-            ->with('models')
-            ->has('models.cars')
+            ->with('car_models')
+            ->has('car_models.cars')
             ->findMany($brands);
 
         return BrandModelResource::collection($brandModels);
@@ -43,7 +43,7 @@ class StockController
         $meta = $stockFilter->getMetaData($request, $query);
         $cars = $stockFilter
             ->orderAndLimit($request, $query)
-            ->with(['model.brand'])
+            ->with(['car_model.brand'])
             ->get();
 
         return CarResource::collection($cars)->additional(compact('meta'));

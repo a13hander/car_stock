@@ -2,9 +2,9 @@
 
 namespace Stock\Requests;
 
-use App\Filters\StockCarFilter;
 use Illuminate\Foundation\Http\FormRequest;
 use Stock\Enums\StockEnum;
+use Stock\Filters\StockCarFilter;
 
 class CarRequest extends FormRequest
 {
@@ -21,6 +21,7 @@ class CarRequest extends FormRequest
         $gearboxTypes = $this->getTypes(StockEnum::TRANSMISSION_TYPE_MAPPING);
         $bodyTypes = $this->getTypes(StockEnum::BODY_TYPE_MAPPING);
         $engineTypes = $this->getTypes(StockEnum::FUEL_TYPE_MAPPING);
+        $types = $this->getTypes(StockEnum::TYPE_MAPPING);
 
         $orders = implode(',', StockCarFilter::ORDERS);
 
@@ -44,6 +45,8 @@ class CarRequest extends FormRequest
 
             'fuel_type' => "nullable|array",
             'fuel_type.*' => "string|in:{$engineTypes}",
+
+            'type' => "string|in:{$types}",
 
             'engine_size_from' => static::RANGE_VALIDATION,
             'engine_size_to' => static::RANGE_VALIDATION,
