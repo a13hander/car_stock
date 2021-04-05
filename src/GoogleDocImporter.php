@@ -2,6 +2,7 @@
 
 namespace Stock;
 
+use Illuminate\Database\Eloquent\Builder;
 use Stock\Events\ImportComplete;
 
 class GoogleDocImporter extends AbstractImporter
@@ -13,6 +14,10 @@ class GoogleDocImporter extends AbstractImporter
 
         $this->importBrands($cars);
         $this->importModels($cars);
+
+        $this->carsImport->setCondition(function (Builder $builder) {
+            return $builder->new();
+        });
         $this->importCars($cars);
 
         ImportComplete::dispatch($result);

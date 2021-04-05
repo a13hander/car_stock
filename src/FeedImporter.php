@@ -2,6 +2,7 @@
 
 namespace Stock;
 
+use Illuminate\Database\Eloquent\Builder;
 use Stock\Events\ImportComplete;
 
 class FeedImporter extends AbstractImporter
@@ -19,6 +20,10 @@ class FeedImporter extends AbstractImporter
         $this->importLocations($cars);
         $this->importBrands($cars);
         $this->importModels($cars);
+
+        $this->carsImport->setCondition(function (Builder $builder) {
+            return $builder->used();
+        });
         $this->importCars($cars);
 
         ImportComplete::dispatch($result);

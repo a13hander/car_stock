@@ -15,7 +15,7 @@ class BrandModelResource extends JsonResource
             'id' => $self->id,
             'name' => $self->name,
             'value' => $self->slug,
-            'models' => SingleModelResource::collection($self->models)
+            'models' => SingleModelResource::collection($self->car_models)
         ];
     }
 }

@@ -19,7 +19,7 @@ class StockCarFilter extends CarFilter
             ->setEnumFilter('transmission', StockEnum::TRANSMISSION_TYPE_MAPPING)
             ->setEnumFilter('body_type', StockEnum::BODY_TYPE_MAPPING)
             ->setEnumFilter('fuel_type', StockEnum::FUEL_TYPE_MAPPING)
-            ->setEnumFilter('type', StockEnum::TYPE_MAPPING);
+            ->setValueFilter('type');
 
         // Filter by Brand & Model
         $this->setClosureFilter('brand_models', function (Builder $q, array $fields) {

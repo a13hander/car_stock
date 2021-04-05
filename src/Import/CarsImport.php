@@ -15,6 +15,8 @@ class CarsImport
     private Car $builder;
     private Collection $newItems;
     private CarModel $carModel;
+    /** @var callable */
+    private $conditions;
 
     public function __construct(Car $builder, CarModel $carModel)
     {
@@ -122,6 +124,18 @@ class CarsImport
 
     protected function newQuery(): Builder
     {
-        return $this->builder->newQuery()->withTrashed();
+        $query = $this->builder->newQuery()->withTrashed();
+
+        if (is_callable($this->conditions)) {
+            $function = $this->conditions;
+            $query = $function($query);
+        }
+
+        return $query;
+    }
+
+    public function setCondition(callable $conditions): void
+    {
+        $this->conditions = $conditions;
     }
 }
