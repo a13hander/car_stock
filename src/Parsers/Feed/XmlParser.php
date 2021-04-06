@@ -17,7 +17,7 @@ class XmlParser extends Parser
         $xml = simplexml_load_file($filename);
         $result = new FetchResult();
 
-        foreach ($xml->Ad as $ad) {
+        foreach ($this->getElements($xml) as $ad) {
             $car = $this->parseCar($ad);
             $validate = $this->validator->validate($car);
 
@@ -30,6 +30,11 @@ class XmlParser extends Parser
         }
 
         return $result;
+    }
+
+    protected function getElements(SimpleXMLElement $xml)
+    {
+        return $xml->Ad;
     }
 
     protected function parseCar(SimpleXMLElement $ad): Car
