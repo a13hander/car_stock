@@ -21,14 +21,14 @@ class Car
     public string $wheel_type;
     public int $engine_power;
     public float $engine_volume;
-    public int $doors;
-    public int $year;
+    public ?int $doors;
+    public ?int $year;
     public int $kilometrage;
-    public string $color;
-    public string $accident;
+    public ?string $color;
+    public ?string $accident;
     public int $owners;
     public string $address;
-    public string $description;
+    public ?string $description;
     public int $price;
     public array $images;
 

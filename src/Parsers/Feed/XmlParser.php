@@ -17,7 +17,7 @@ class XmlParser extends Parser
         $xml = simplexml_load_file($filename);
         $result = new FetchResult();
 
-        foreach ($xml->Ad as $ad) {
+        foreach ($this->getElements($xml) as $ad) {
             $car = $this->parseCar($ad);
             $validate = $this->validator->validate($car);
 
@@ -30,6 +30,11 @@ class XmlParser extends Parser
         }
 
         return $result;
+    }
+
+    protected function getElements(SimpleXMLElement $xml)
+    {
+        return $xml->Ad;
     }
 
     protected function parseCar(SimpleXMLElement $ad): Car
@@ -139,15 +144,23 @@ class XmlParser extends Parser
         return (float)$element->{$field};
     }
 
-    protected function doors(SimpleXMLElement $element): int
+    protected function doors(SimpleXMLElement $element): ?int
     {
+        if (!isset($this->fieldsMap['doors'])) {
+            return null;
+        }
+
         $field = $this->fieldsMap['doors'];
 
         return (int)$element->{$field};
     }
 
-    protected function year(SimpleXMLElement $element): int
+    protected function year(SimpleXMLElement $element): ?int
     {
+        if (!isset($this->fieldsMap['year'])) {
+            return null;
+        }
+
         $field = $this->fieldsMap['year'];
 
         return (int)$element->{$field};
@@ -160,15 +173,23 @@ class XmlParser extends Parser
         return (int)$element->{$field};
     }
 
-    protected function color(SimpleXMLElement $element): string
+    protected function color(SimpleXMLElement $element): ?string
     {
+        if (!isset($this->fieldsMap['color'])) {
+            return null;
+        }
+
         $field = $this->fieldsMap['color'];
 
         return $element->{$field};
     }
 
-    protected function accident(SimpleXMLElement $element): string
+    protected function accident(SimpleXMLElement $element): ?string
     {
+        if (!isset($this->fieldsMap['accident'])) {
+            return null;
+        }
+
         $field = $this->fieldsMap['accident'];
 
         return $element->{$field};
@@ -188,8 +209,12 @@ class XmlParser extends Parser
         return $element->{$field};
     }
 
-    protected function description(SimpleXMLElement $element): string
+    protected function description(SimpleXMLElement $element): ?string
     {
+        if (!isset($this->fieldsMap['description'])) {
+            return null;
+        }
+
         $field = $this->fieldsMap['description'];
 
         return $element->{$field};
