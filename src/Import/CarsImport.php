@@ -118,7 +118,7 @@ class CarsImport
         return $this->carModel
             ->newQuery()
             ->whereHas('brand', fn(Builder $builder) => $builder->where('slug', Str::slug($brand)))
-            ->where('name', Str::slug($model))
+            ->where('slug', Str::slug($model))
             ->first();
     }
 

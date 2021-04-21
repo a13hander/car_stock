@@ -29,11 +29,10 @@ class ModelImport
         foreach ($this->brandBuilder->newQuery()->get() as $brand) {
             $models = $cars->filter(fn(Car $car) => Str::slug($car->brand) == $brand->slug)
                 ->pluck('model')
-                ->unique()
-                ->map(fn($name) => Str::slug($name));
+                ->unique();
             $exists = $brand->car_models()->pluck('slug')->toArray();
 
-            $newModels = $models->filter(fn(string $model) => in_array($model, $exists) === false);
+            $newModels = $models->filter(fn(string $model) => in_array(Str::slug($model), $exists) === false);
 
             foreach ($newModels as $model) {
                 $this->builder->newQuery()->create([
