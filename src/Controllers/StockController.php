@@ -48,4 +48,11 @@ class StockController
 
         return CarResource::collection($cars)->additional(compact('meta'));
     }
+
+    public function getCountCars(CarRequest $request, StockCarFilter $stockFilter)
+    {
+        $query = $stockFilter->filtrate($request);
+
+        return $stockFilter->getMetaData($request, $query);
+    }
 }
