@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $id
  * @property boolean $is_main
  * @property integer $pos
+ * @property string $image
+ * @property string $original_image
  *
  * @property integer $car_id
  * @property Car $car
