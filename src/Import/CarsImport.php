@@ -91,6 +91,7 @@ class CarsImport
             $car->images()->create([
                 'image' => $image,
                 'original_image' => $image,
+                'from_import' => 1,
             ]);
         }
 
@@ -107,13 +108,14 @@ class CarsImport
         $car->fill($attrs);
         $car->save();
 
-        if (!$this->compareArrays($carDto->images, $car->images->pluck('original_image')->toArray()) && count($car->images) > 0) {
-            $car->images()->delete();
+        if (!$this->compareArrays($carDto->images, $car->images()->imported()->get()->pluck('original_image')->toArray())) {
+            $car->images()->imported()->delete();
 
             foreach ($carDto->images as $image) {
                 $car->images()->create([
                     'image' => $image,
                     'original_image' => $image,
+                    'from_import' => 1,
                 ]);
             }
         }
