@@ -88,7 +88,10 @@ class CarsImport
         $car = $this->newQuery()->create($attrs);
 
         foreach ($carDto->images as $image) {
-            $car->images()->create(compact('image'));
+            $car->images()->create([
+                'image' => $image,
+                'original_image' => $image,
+            ]);
         }
 
         return $car;
@@ -104,11 +107,14 @@ class CarsImport
         $car->fill($attrs);
         $car->save();
 
-        if ($carDto->images !== $car->images->toArray() && count($car->images) > 0) {
+        if (!$this->compareArrays($carDto->images, $car->images->pluck('original_image')->toArray()) && count($car->images) > 0) {
             $car->images()->delete();
 
             foreach ($carDto->images as $image) {
-                $car->images()->create(compact('image'));
+                $car->images()->create([
+                    'image' => $image,
+                    'original_image' => $image,
+                ]);
             }
         }
     }
@@ -137,5 +143,14 @@ class CarsImport
     public function setCondition(callable $conditions): void
     {
         $this->conditions = $conditions;
+    }
+
+    protected function compareArrays(array $a, array $b): bool
+    {
+        return (
+            count($a) == count($b)
+            && count(array_diff($a, $b)) == 0
+            && count(array_diff($b, $a)) == 0
+        );
     }
 }
