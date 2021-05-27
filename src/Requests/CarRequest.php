@@ -48,8 +48,8 @@ class CarRequest extends FormRequest
 
             'type' => "string|in:{$types}",
 
-            'engine_size_from' => static::RANGE_VALIDATION,
-            'engine_size_to' => static::RANGE_VALIDATION,
+            'engine_volume_from' => static::RANGE_VALIDATION,
+            'engine_volume_to' => static::RANGE_VALIDATION,
 
             'price_from' => static::RANGE_VALIDATION,
             'price_to' => static::RANGE_VALIDATION,
