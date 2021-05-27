@@ -37,8 +37,8 @@ class CarRequest extends FormRequest
             'drive_type' => "nullable|array",
             'drive_type.*' => "string|in:{$driveTypes}",
 
-            'transmission' => "nullable|array",
-            'transmission.*' => "string|in:{$gearboxTypes}",
+            'gearbox_type' => "nullable|array",
+            'gearbox_type.*' => "string|in:{$gearboxTypes}",
 
             'body_type' => "nullable|array",
             'body_type.*' => "string|in:{$bodyTypes}",

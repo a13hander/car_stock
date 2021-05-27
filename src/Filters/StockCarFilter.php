@@ -16,7 +16,7 @@ class StockCarFilter extends CarFilter
             ->setRangeFilter('price')
             ->setRangeFilter('engine_size')
             ->setEnumFilter('drive_type', StockEnum::DRIVE_TYPE_MAPPING)
-            ->setEnumFilter('transmission', StockEnum::TRANSMISSION_TYPE_MAPPING)
+            ->setEnumFilter('gearbox_type', StockEnum::TRANSMISSION_TYPE_MAPPING)
             ->setEnumFilter('body_type', StockEnum::BODY_TYPE_MAPPING)
             ->setEnumFilter('fuel_type', StockEnum::FUEL_TYPE_MAPPING)
             ->setValueFilter('type');
