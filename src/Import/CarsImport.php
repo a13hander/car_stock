@@ -67,7 +67,14 @@ class CarsImport
         $toRemove = $existsVins->diff($importVins);
 
         if ($toRemove->isNotEmpty()) {
-            $this->newQuery()->whereIn('vin', $toRemove->toArray())->delete();
+            $vinsRemove = $toRemove->toArray();
+
+            if (config('stock.use_soft_delete', false)) {
+                $this->newQuery()->whereIn('vin', $vinsRemove)->delete();
+            } else {
+                $this->newQuery()->whereIn('vin', $vinsRemove)->forceDelete();
+            }
+
         }
     }
 
