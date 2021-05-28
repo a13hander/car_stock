@@ -38,7 +38,6 @@ class CarsImport
                     $newCar = $this->createCar($carDto);
                     $this->newItems->push($newCar);
                 } catch (Exception $exception) {
-                    dd($exception->getMessage());
                 }
 
                 continue;
