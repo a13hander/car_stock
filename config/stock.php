@@ -54,4 +54,6 @@ return [
             'price' => 17,
         ],
     ],
+
+    'use_soft_delete' => false,
 ];
