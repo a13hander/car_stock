@@ -49,7 +49,7 @@ class DefaultValidator implements Validator
 
     protected function vin(Car $car): ?ValidationError
     {
-        if (CarDB::query()->where('vin', $car->vin)->get()->count() > 0) {
+        if (CarDB::query()->where('vin', $car->vin)->count() > 0) {
             return new ValidationError('vin', 'Авто с таким вином уже существует');
         }
 
