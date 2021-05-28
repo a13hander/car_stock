@@ -55,5 +55,5 @@ return [
         ],
     ],
 
-    'use_soft_delete' => false,
+    'use_soft_delete' => true,
 ];
