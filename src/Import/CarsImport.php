@@ -131,7 +131,11 @@ class CarsImport
 
     protected function newQuery(): Builder
     {
-        $query = $this->builder->newQuery()->withTrashed();
+        $query = $this->builder->newQuery();
+
+        if (config('stock.use_soft_delete', false)) {
+            $query = $query->withTrashed();
+        }
 
         if (is_callable($this->conditions)) {
             $function = $this->conditions;
