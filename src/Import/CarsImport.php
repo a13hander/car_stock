@@ -74,7 +74,7 @@ class CarsImport
             $vinsRemove = $toRemove->toArray();
             $builder = $this->newQuery()->whereIn('vin', $vinsRemove);
 
-            if (config('stock.use_soft_delete', true)) {
+            if ($this->useSoftDelete) {
                 $builder->delete();
             } else {
                 $builder->forceDelete();
