@@ -31,6 +31,8 @@ class Car
     public ?string $description;
     public int $price;
     public array $images;
+    public int $discount;
+    public float $credit_percent;
 
     public function toArray(): array
     {
@@ -55,6 +57,8 @@ class Car
             'year' => $this->year ?? null,
             'equipment' => $this->equipment ?? null,
             'modification' => $this->modification ?? null,
+            'discount' => $this->discount ?? 0,
+            'credit_percent' => $this->credit_percent ?? 0,
         ];
     }
 }
