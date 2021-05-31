@@ -74,7 +74,7 @@ class CarsImport
             $vinsRemove = $toRemove->toArray();
             $builder = $this->newQuery()->whereIn('vin', $vinsRemove);
 
-            if (config('stock.use_soft_delete', true)) {
+            if ($this->useSoftDelete) {
                 $builder->delete();
             } else {
                 $builder->forceDelete();
@@ -113,6 +113,7 @@ class CarsImport
         $model = $this->resolveModel($carDto->brand, $carDto->model) ?? throw new Exception('Модель не найдена');
         $attrs = array_merge($carDto->toArray(), [
             'model_id' => $model->id,
+            'id' => $car->id,
         ]);
 
         $car->fill($attrs);
