@@ -43,7 +43,7 @@ class CarsImport
                 continue;
             }
 
-            if ($car->trashed()) {
+            if (config('stock.use_soft_delete', true) && $car->trashed()) {
                 $car->restore();
             }
 
