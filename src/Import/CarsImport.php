@@ -18,11 +18,15 @@ class CarsImport
     /** @var callable */
     private $conditions;
 
+    private bool $useSoftDelete;
+
     public function __construct(Car $builder, CarModel $carModel)
     {
         $this->builder = $builder;
         $this->newItems = collect();
         $this->carModel = $carModel;
+
+        $this->useSoftDelete = config('stock.use_soft_delete', true);
     }
 
     public function handle(Collection $cars): void
@@ -43,7 +47,7 @@ class CarsImport
                 continue;
             }
 
-            if (config('stock.use_soft_delete', true) && $car->trashed()) {
+            if ($this->useSoftDelete && $car->trashed()) {
                 $car->restore();
             }
 
@@ -141,7 +145,7 @@ class CarsImport
     {
         $query = $this->builder->newQuery();
 
-        if (config('stock.use_soft_delete', true)) {
+        if ($this->useSoftDelete) {
             $query = $query->withTrashed();
         }
 
