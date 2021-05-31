@@ -57,8 +57,8 @@ class Car
             'year' => $this->year ?? null,
             'equipment' => $this->equipment ?? null,
             'modification' => $this->modification ?? null,
-            'discount' => $this->discount ?? null,
-            'credit_percent' => $this->credit_percent ?? null,
+            'discount' => $this->discount ?? 0,
+            'credit_percent' => $this->credit_percent ?? 0,
         ];
     }
 }
