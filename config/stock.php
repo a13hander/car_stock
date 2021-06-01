@@ -56,4 +56,8 @@ return [
     ],
 
     'use_soft_delete' => false,
+
+    'car_error_mail_list' => [
+        'test-cases@tapir.ws',
+    ]
 ];

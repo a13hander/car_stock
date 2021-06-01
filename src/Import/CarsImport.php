@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use Stock\Dto\Car as CarDto;
 use App\Models\CarStock\Car;
 use App\Models\CarStock\CarModel;
+use Stock\Dto\IncompleteCar;
+use Stock\Events\ImportCarError;
 
 class CarsImport
 {
@@ -33,6 +35,8 @@ class CarsImport
     {
         $this->removeCars($cars);
 
+        $failedCars = [];
+
         /** @var CarDto $carDto */
         foreach ($cars as $carDto) {
             $car = $this->getCar($carDto->vin);
@@ -42,6 +46,7 @@ class CarsImport
                     $newCar = $this->createCar($carDto);
                     $this->newItems->push($newCar);
                 } catch (Exception $exception) {
+                    $failedCars[] = new IncompleteCar($carDto, ['Ошибка при создании авто: ' . $exception->getMessage()]);
                 }
 
                 continue;
@@ -53,9 +58,12 @@ class CarsImport
 
             try {
                 $this->updateCar($car, $carDto);
-            } catch (Exception) {
+            } catch (Exception $exception) {
+                $failedCars[] = new IncompleteCar($carDto, ['Ошибка при обновлении авто: ' . $exception->getMessage()]);
             }
         }
+
+        ImportCarError::dispatch($failedCars);
     }
 
     public function getLastImportedItems(): Collection
