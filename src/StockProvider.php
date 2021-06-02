@@ -2,17 +2,17 @@
 
 namespace Stock;
 
+use GuzzleHttp\Client as HttpClient;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
 use Stock\Commands\ImportCommand;
 use Stock\Fetchers\Feed\FeedFetcher;
-use Stock\Fetchers\Fetcher;
 use Stock\Fetchers\Feed\FetcherConfig;
+use Stock\Fetchers\Fetcher;
 use Stock\Fetchers\GoogleDoc\GoogleDocFetcher;
 use Stock\Parsers\Feed\XmlParser;
 use Stock\Parsers\GoogleDoc\GoogleDocParser;
 use Stock\Validation\DefaultValidator;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\ServiceProvider;
-use GuzzleHttp\Client as HttpClient;
 use Stock\Validation\Validator;
 
 class StockProvider extends ServiceProvider
@@ -40,6 +40,8 @@ class StockProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../stubs/Models/' => app_path('Models/CarStock')
         ], 'models');
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'stock');
     }
 
     public function register()
