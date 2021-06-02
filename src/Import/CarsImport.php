@@ -87,7 +87,6 @@ class CarsImport
             } else {
                 $builder->forceDelete();
             }
-
         }
     }
 
