@@ -20,7 +20,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "\\Stock\\StockProvider"
+                "\\Stock\\StockProvider",
+                "\\Stock\\StockEventProvider"
             ]
         }
     }

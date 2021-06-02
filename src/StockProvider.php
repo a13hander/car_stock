@@ -2,29 +2,21 @@
 
 namespace Stock;
 
+use GuzzleHttp\Client as HttpClient;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
 use Stock\Commands\ImportCommand;
-use Stock\Events\ImportCarError;
 use Stock\Fetchers\Feed\FeedFetcher;
-use Stock\Fetchers\Fetcher;
 use Stock\Fetchers\Feed\FetcherConfig;
+use Stock\Fetchers\Fetcher;
 use Stock\Fetchers\GoogleDoc\GoogleDocFetcher;
-use Stock\Listeners\SendImportCarErrorListener;
 use Stock\Parsers\Feed\XmlParser;
 use Stock\Parsers\GoogleDoc\GoogleDocParser;
 use Stock\Validation\DefaultValidator;
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use GuzzleHttp\Client as HttpClient;
 use Stock\Validation\Validator;
 
 class StockProvider extends ServiceProvider
 {
-    protected $listen = [
-        ImportCarError::class => [
-            SendImportCarErrorListener::class
-        ],
-    ];
-
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
@@ -54,8 +46,6 @@ class StockProvider extends ServiceProvider
 
     public function register()
     {
-        parent::register();
-
         $this->app->bind(Validator::class, function () {
             return new DefaultValidator();
         });
