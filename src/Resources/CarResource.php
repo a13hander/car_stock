@@ -27,7 +27,7 @@ class CarResource extends JsonResource
             'url' => $self->getUrl(),
             'main_image' => $self->getMainImage()?->image,
             'color' => $self->color,
-            'sold' => $self->trashed(),
+            'sold' => config('stock.use_soft_delete', true) ? $self->trashed() : false,
             'type' => $self->type
         ];
     }
