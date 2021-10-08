@@ -84,9 +84,7 @@ abstract class CarFilter
     public function filtrate(FormRequest $request): Builder
     {
         /** @var Builder $query */
-        $query = $this->cars->newQuery()
-            ->with('images')
-            ->orderBy('deleted_at');
+        $query = $this->cars->newQuery();
 
         $formFields = array_filter(Arr::except($request->validated(), static::EXCLUDES_FIELDS), function ($value) {
             return (is_null($value) || $value === '') ? false : true;

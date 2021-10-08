@@ -55,6 +55,7 @@ return [
         ],
     ],
 
+    'show_only_with_images' => true,
     'use_soft_delete' => true,
 
     'car_error_mail_list' => [

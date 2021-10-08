@@ -40,6 +40,12 @@ class StockController
     {
         $query = $stockFilter->filtrate($request);
 
+        if (config('stock.show_only_with_images')) {
+            $query->with('images');
+        }
+
+        $query->orderBy('deleted_at');
+
         $meta = $stockFilter->getMetaData($request, $query);
         $cars = $stockFilter
             ->orderAndLimit($request, $query)
